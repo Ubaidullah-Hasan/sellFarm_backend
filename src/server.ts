@@ -8,8 +8,8 @@ let server: Server;
 
 async function main() {
   try {
-    // await mongoose.connect(config.database_url as string);
-    await mongoose.connect("mongodb://localhost:27017/new_my_db");
+    // await mongoose.connect(config.database_url as string); 
+    await mongoose.connect("mongodb://localhost:27017/sell_farm");
     logger.info("🛢️🛢️ Database connected successfully.");
 
     server = app.listen(config.port, () => {
@@ -34,10 +34,10 @@ process.on("unhandledRejection", (err) => {
 
 process.on("uncaughtException", () => {
   logger.error(`😈 uncaughtException is detected , shutting down ...`);
-  process.exit(1);
+  process.exit(1); 
 });
 
-
+ 
 //SIGTERM
 process.on('SIGTERM', () => {
   logger.info('SIGTERM IS RECEIVE');

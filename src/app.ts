@@ -1,5 +1,7 @@
 import express, { type Application } from "express";
 import cors from "cors";
+import notFoundRoute from "./app/middlewares/notFoundRoute";
+import router from "./app/routes";
 
 const app: Application = express();
 
@@ -7,10 +9,14 @@ const app: Application = express();
 app.use(cors());
 app.use(express.json());
 
-// test route
+// routes 
+app.use("/api/v1", router);
 
+// test route
 app.get("/", (req, res) => {
   res.send("Welcome to our server!");
 });
+
+app.use(notFoundRoute);
 
 export default app;
