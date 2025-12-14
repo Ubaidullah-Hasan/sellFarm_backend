@@ -3,6 +3,8 @@ import AppError from "../../utils/AppError";
 import { UserModel } from "../users/user.model";
 import { TLoginUser } from "./auth.interface";
 import { userStatus } from "../users/user.constants";
+import { createToken } from "./auth.utils";
+import config from "../../../config";
 
 const loginUserFromDB = async (payload: TLoginUser) => {
   const { mobile, password } = payload;
@@ -22,33 +24,28 @@ const loginUserFromDB = async (payload: TLoginUser) => {
     throw new AppError(StatusCodes.BAD_REQUEST, "Password is incorrect!");
   }
 
-  return user;
+  const jwtPayload = {
+    userId: user._id,
+    role: user.role as string,
+    mobile: user.mobile,
+  };
 
-  //   //check match password
-  //   if (!await bcrypt.compare(password, isExistUser.password)) {
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string
+  );
 
-  //     throw new ApiError(StatusCodes.BAD_REQUEST, 'Password is incorrect!');
-  //   }
+  const refreshToken = createToken(
+    jwtPayload,
+    config.jwt_refresh_secret as string,
+    config.jwt_refresh_expires_in as string
+  );
 
-  //create token
-  //   const accessToken = jwtHelper.createToken(
-  //     { id: isExistUser._id, role: isExistUser.role, email: isExistUser.email },
-  //     config.jwt.jwt_secret as Secret,
-  //     config.jwt.jwt_expire_in as string
-  //   );
-
-  //   const refreshToken = jwtHelper.createToken(
-  //     { id: isExistUser._id, role: isExistUser.role, email: isExistUser.email },
-  //     config.jwt.jwt_refresh as Secret,
-  //     config.jwt.jwt_refresh_expire_in as string
-  //   );
-
-  //   return {
-  //     id: isExistUser._id,
-  //     accessToken,
-  //     refreshToken,
-  //     role: isExistUser.role,
-  //   };
+  return {
+    accessToken,
+    refreshToken,
+  };
 };
 
 export const authServices = {
