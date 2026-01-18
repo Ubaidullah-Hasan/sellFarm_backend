@@ -4,8 +4,8 @@ export interface IProduct extends Document {
   title: string;
   image: string;
   dailyProfit: number;
-  maxInvestCount: number;
-  investmentCycle: number;
+  maxInvestCountPerPerson: number;
+  investmentDayCycle: number;
   price: number;
   totalProfit: number;
   // Don't need to explicitly define _id, createdAt, updatedAt
@@ -13,14 +13,4 @@ export interface IProduct extends Document {
   //   _id: Types.ObjectId;
   //   createdAt: Date;
   //   updatedAt: Date;
-}
-
-export interface IProductInput {
-  title: string;
-  image: string;
-  dailyProfit: number;
-  maxInvestCount: number;
-  investmentCycle: number;
-  price: number;
-  totalProfit: number;
 }

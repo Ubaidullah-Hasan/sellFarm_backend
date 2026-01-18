@@ -1,71 +1,72 @@
-import { Schema, model } from 'mongoose';
-import { IProduct } from './products.interface';
+import { Schema, model } from "mongoose";
+import { IProduct } from "./products.interface";
 
 const productSchema = new Schema<IProduct>(
   {
     title: {
       type: String,
-      required: [true, 'Title is required'],
+      required: [true, "Title is required"],
       trim: true,
-      maxlength: [200, 'Title cannot exceed 200 characters']
+      unique: [true, "Title already exists, please choose another one"],
+      maxlength: [200, "Title cannot exceed 200 characters"],
     },
     image: {
       type: String,
-      required: [true, 'Image URL is required'],
-      trim: true
+      required: [true, "Image URL is required"],
+      trim: true,
     },
     dailyProfit: {
       type: Number,
-      required: [true, 'Daily profit is required'],
-      min: [0, 'Daily profit cannot be negative']
+      required: [true, "Daily profit is required"],
+      min: [0, "Daily profit cannot be negative"],
     },
-    maxInvestCount: {
+    maxInvestCountPerPerson: {
       type: Number,
-      required: [true, 'Max invest count is required'],
-      min: [0, 'Max invest count cannot be negative'],
-      default: 0
+      required: [true, "Max invest count is required"],
+      min: [0, "Max invest count cannot be negative"],
+      default: 0,
     },
-    investmentCycle: {
+    investmentDayCycle: {
       type: Number,
-      required: [true, 'Investment cycle is required'],
-      min: [1, 'Investment cycle must be at least 1 day'],
-      default: 30
+      required: [true, "Investment cycle is required"],
+      min: [1, "Investment cycle must be at least 1 day"],
+      default: 30,
     },
     price: {
       type: Number,
-      required: [true, 'Price is required'],
-      min: [0, 'Price cannot be negative']
+      required: [true, "Price is required"],
+      min: [0, "Price cannot be negative"],
     },
     totalProfit: {
       type: Number,
-      required: [true, 'Total profit is required'],
-      min: [0, 'Total profit cannot be negative']
-    }
+      required: [true, "Total profit is required"],
+      min: [0, "Total profit cannot be negative"],
+    },
   },
   {
     timestamps: true,
     toJSON: { virtuals: true },
-    toObject: { virtuals: true }
-  }
+    toObject: { virtuals: true },
+  },
 );
 
 // Indexes for better query performance
 productSchema.index({ title: 1 });
 
 // Virtual for ROI (Return on Investment) percentage
-productSchema.virtual('roiPercentage').get(function(this: IProduct) {
+productSchema.virtual("roiPercentage").get(function (this: IProduct) {
   return ((this.totalProfit - this.price) / this.price) * 100;
 });
 
 // Virtual for total investment capacity
-productSchema.virtual('totalInvestmentCapacity').get(function(this: IProduct) {
-  return this.price * this.maxInvestCount;
+productSchema.virtual("totalInvestmentCapacity").get(function (this: IProduct) {
+  return this.price * this.maxInvestCountPerPerson;
 });
 
 // Pre-save middleware (if needed)
-productSchema.pre('save', function(next) {
+productSchema.pre("save", function (next) {
   // You can add validation or calculations here
   next();
 });
 
-export const Product = model<IProduct>('Product', productSchema);
+export const Product = model<IProduct>("Product", productSchema);

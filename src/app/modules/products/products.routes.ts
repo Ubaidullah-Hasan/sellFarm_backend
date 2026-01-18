@@ -9,8 +9,8 @@ const router = Router();
 
 router.post(
   "/",
-  validateRequest(ProductValidation.createProductZodSchema),
   auth(userRole.ADMIN),
+  validateRequest(ProductValidation.createProductZodSchema),
   ProductController.createProduct,
 );
 
@@ -20,11 +20,11 @@ router.get(
   ProductController.getAllProducts,
 );
 
-// router.get(
-//   '/:id',
-//   validateProductId,
-//   ProductController.getProductById
-// );
+router.get(
+  '/:id',
+  auth(userRole.ADMIN, userRole.INVESTOR),
+  ProductController.getProductById
+);
 
 // router.put(
 //   '/:id',
