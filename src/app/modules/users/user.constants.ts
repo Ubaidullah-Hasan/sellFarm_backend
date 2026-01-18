@@ -2,7 +2,7 @@ export const enum userRole {
   ADMIN = "ADMIN",
   INVESTOR = "INVESTOR",
   //   "ADMIN", => ACCESS userRole[0]  ======== (ব্যাকওয়ার্ড এক্সেস)
-  //   "INVESTOR", => ACCESS userRole[0]
+  //   "INVESTOR", => ACCESS userRole[1]
 }
 
 export const enum userStatus {
