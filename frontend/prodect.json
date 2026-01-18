@@ -1,0 +1,90 @@
+[
+  {
+    "name": "জৈব - পালং শাক <বিনামূল্যে ভর্তুকি>",
+    "image": "https://i.ibb.co.com/rRQxpkyT/download.jpg",
+    "years": "রাজস্ব চক্র : 365 দিন",
+    "price": 9,
+    "Day": "দৈনিক আয়",
+    "income": "3,285",
+    "total": "মোট আয়",
+    "target": 0,
+    "count": "1/1"
+  },
+  {
+    "name": "জৈব - বাঁধাকপি",
+    "image": "https://i.ibb.co.com/k2FpZJhC/download-1.jpg",
+    "years": "রাজস্ব চক্র : 365 দিন",
+    "price": 24,
+    "Day": "দৈনিক আয়",
+    "income": " 4,320",
+    "total": "মোট আয়",
+    "target": 300,
+    "count": "0/2"
+  },
+  {
+    "name": "জৈব - ফুলকপি",
+    "image": "https://i.ibb.co.com/LhRyyjYM/images.jpg",
+    "years": "রাজস্ব চক্র : 365 দিন",
+    "price": 48,
+    "Day": "দৈনিক আয়",
+    "income": "8,640",
+    "total": "মোট আয়",
+    "target": 600,
+    "count": "0/2"
+  },
+  {
+    "name": "জৈব - সেলারি",
+    "image": "https://i.ibb.co.com/WvSMhn6Z/download-2.jpg",
+    "years": "রাজস্ব চক্র : 365 দিন",
+    "price": 96,
+    "Day": "দৈনিক আয়",
+    "income": "17,280",
+    "total": "মোট আয়",
+    "target": 1000,
+    "count": "0/2"
+  },
+  {
+    "name": "জৈব - গাজর",
+    "image": "https://i.ibb.co.com/PsyHsYpL/images-1.jpg",
+    "years": "রাজস্ব চক্র : 365 দিন",
+    "price": 144,
+    "Day": "দৈনিক আয়",
+    "income":" 25,920",
+    "total": "মোট আয়",
+    "target": 1500,
+    "count": "0/2"
+  },
+  {
+    "name": "বেগুন",
+    "image": "https://i.ibb.co.com/mVYDmHWN/download-3.jpg",
+    "years": "রাজস্ব চক্র : 365 দিন",
+    "price": 204,
+    "Day": "দৈনিক আয়",
+    "income": "74,460",
+    "total": "মোট আয়",
+    "target": 2000,
+    "count": "0/2"
+  },
+  {
+    "name": "জৈব - আদা",
+    "image": "https://i.ibb.co.com/1JYYQ8KS/download-4.jpg",
+    "years": "রাজস্ব চক্র : 365 দিন",
+    "price": 360,
+    "Day": "দৈনিক আয়",
+    "income": "64,800",
+    "total": "মোট আয়",
+    "target": 2500,
+    "count": "0/2"
+  },
+  {
+    "name": "জৈব - চাইনিজ বাঁধাকপি",
+    "image": "https://i.ibb.co.com/qMWNFFjv/download-5.jpg",
+    "years": "রাজস্ব চক্র : 365 দিন",
+    "price": 546,
+    "Day": "দৈনিক আয়",
+    "income": "98,280",
+    "total": "মোট আয়",
+    "target": 3000,
+    "count": "0/2"
+  }
+]
