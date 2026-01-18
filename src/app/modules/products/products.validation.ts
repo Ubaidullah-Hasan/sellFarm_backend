@@ -25,8 +25,7 @@ const createProductZodSchema = z.object({
       .int()
       .min(1, "Investment cycle must be at least 1 day")
       .default(30),
-    price: z.number().min(0, "Price cannot be negative"),
-    totalProfit: z.number().min(0, "Total profit cannot be negative"),
+    price: z.number().min(0, "Price cannot be negative")
   }),
 });
 

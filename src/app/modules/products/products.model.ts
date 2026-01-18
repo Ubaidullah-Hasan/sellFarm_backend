@@ -39,7 +39,6 @@ const productSchema = new Schema<IProduct>(
     },
     totalProfit: {
       type: Number,
-      required: [true, "Total profit is required"],
       min: [0, "Total profit cannot be negative"],
     },
   },
@@ -55,7 +54,7 @@ productSchema.index({ title: 1 });
 
 // Virtual for ROI (Return on Investment) percentage
 productSchema.virtual("roiPercentage").get(function (this: IProduct) {
-  return ((this.totalProfit - this.price) / this.price) * 100;
+  return ((this.totalProfit as number - this.price) / this.price) * 100;
 });
 
 // Virtual for total investment capacity
@@ -65,7 +64,8 @@ productSchema.virtual("totalInvestmentCapacity").get(function (this: IProduct) {
 
 // Pre-save middleware (if needed)
 productSchema.pre("save", function (next) {
-  // You can add validation or calculations here
+  this.totalProfit = this.dailyProfit * this.investmentDayCycle;
+
   next();
 });
 
