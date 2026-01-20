@@ -29,7 +29,7 @@ const frontendPath = path.join(process.cwd(), "frontend");
 app.use(express.static(frontendPath));
 
 // test route
-app.get("/", (req, res) => {
+app.get("/welcome", (req, res) => {
   res.send("Welcome to our server!");
 });
 

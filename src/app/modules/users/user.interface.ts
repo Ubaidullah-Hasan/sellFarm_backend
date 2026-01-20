@@ -11,7 +11,8 @@ export type TUser = {
   role?: string;
   mobile: string;
   password: string;
-  invitedBy: Types.ObjectId | null;
+  invitedBy?: Types.ObjectId | null;
+  referedCode: string;
   selfCode: string;
   otpVarification?: TOtpVarification;
   balance?: number;

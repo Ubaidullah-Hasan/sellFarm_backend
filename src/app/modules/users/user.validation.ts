@@ -18,9 +18,9 @@ const registerUserZodSchema = z.object({
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(128, "Password too long"),
-    invitedBy: z
-      .string({message: "Invited id required!"})
-      .regex(/^[0-9a-fA-F]{24}$/, "invitedBy must be a valid ObjectId"),
+    referedCode: z
+      .string({message: "Refered code is required!"})
+      .min(4, "Need referedCode to register"),
     selfCode: z
       .string()
       .min(4, "selfCode too short")

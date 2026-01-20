@@ -40,13 +40,16 @@ const userSchema = new Schema<IUserDocument>(
     },
     invitedBy: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: "User",
+    },
+    referedCode: {
+      type: String,
+      required: true
     },
     selfCode: {
       type: String,
       required: true,
-      unique: true,
+      unique: [true, "Self code already exists!"],
     },
     otpVarification: {
       type: otpVarificationSchema,
