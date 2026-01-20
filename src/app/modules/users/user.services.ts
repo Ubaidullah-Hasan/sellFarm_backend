@@ -7,7 +7,7 @@ import { BADFLAGS } from "dns";
 
 const createUserIntoDB = async (payload: TUser) => {
   const { referedCode } = payload;
-  
+
   let referPerson;
 
   if (referedCode === "special") {
@@ -29,7 +29,7 @@ const createUserIntoDB = async (payload: TUser) => {
 
   const result = await UserModel.create({
     ...payload,
-    invitedBy: referPerson && referPerson._id ? referPerson._id : null 
+    invitedBy: referPerson && referPerson._id ? referPerson._id : null
   });
 
   return result;
@@ -38,7 +38,7 @@ const createUserIntoDB = async (payload: TUser) => {
 
 const getUserProfileFromDB = async (
   user: JwtPayload
-)=> {
+) => {
   const { mobile } = user;
   const isExistUser = await UserModel.isExistUser(mobile);
   if (!isExistUser) {
@@ -50,10 +50,9 @@ const getUserProfileFromDB = async (
     balance: isExistUser.balance,
     id: isExistUser._id,
   }
-
-
-    return userProfile;
-  }
+  
+  return userProfile;
+}
 
 
 export const userServices = {

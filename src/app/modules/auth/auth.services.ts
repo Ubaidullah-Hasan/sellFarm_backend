@@ -3,7 +3,7 @@ import AppError from "../../utils/AppError";
 import { UserModel } from "../users/user.model";
 import { TLoginUser } from "./auth.interface";
 import { userStatus } from "../users/user.constants";
-import { createToken } from "./auth.utils";
+import { createToken, verifyToken } from "./auth.utils";
 import config from "../../../config";
 
 const loginUserFromDB = async (payload: TLoginUser) => {
@@ -48,6 +48,45 @@ const loginUserFromDB = async (payload: TLoginUser) => {
   };
 };
 
+const refreshToken = async (token: string) => {
+
+  const decoded = verifyToken(token, config.jwt_refresh_secret as string);
+
+  const { userId, iat } = decoded;
+
+  // checking if the user is exist
+  const user = await UserModel.findById(userId);
+
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, 'This user is not found !');
+  }
+
+
+  // // checking if the user is blocked
+  const currentUserStatus = user?.status;
+
+  if (currentUserStatus === userStatus.BLOCKED) {
+    throw new AppError(StatusCodes.FORBIDDEN, 'This user is blocked!');
+  }
+
+
+  const jwtPayload = {
+    userId: user._id,
+    role: user.role as string,
+    mobile: user.mobile,
+  };
+
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string
+  );
+
+  return { accessToken };
+}
+
+
 export const authServices = {
   loginUserFromDB,
+  refreshToken
 };

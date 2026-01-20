@@ -4,6 +4,8 @@ import notFoundRoute from "./app/middlewares/notFoundRoute";
 import router from "./app/routes";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 import path from "path";
+import cookieParser from 'cookie-parser';
+
 
 const app: Application = express();
 
@@ -14,6 +16,9 @@ app.use(
   }),
 );
 app.use(express.json());
+// Cookie parser middleware
+app.use(cookieParser());
+
 
 // routes
 app.use("/api/v1", router);

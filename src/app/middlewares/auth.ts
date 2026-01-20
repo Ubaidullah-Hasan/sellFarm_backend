@@ -4,7 +4,7 @@ import { Secret } from 'jsonwebtoken';
 import config from '../../config';
 import AppError from '../utils/AppError';
 import { userRole } from '../modules/users/user.constants';
-import { jwtHelper } from '../utils/jwtHelper';
+import { verifyToken } from '../modules/auth/auth.utils';
 
 const auth =
   (...roles: userRole[]) =>
@@ -20,11 +20,10 @@ const auth =
         const token = tokenWithBearer.split(' ')[1];
         
         //verify token
-        const verifyUser = jwtHelper.verifyToken(
+        const verifyUser = verifyToken(
           token,
-          config.jwt_access_secret as Secret
+          config.jwt_access_secret as string
         );
-        
         //set user to header
         req.user = verifyUser;
 
