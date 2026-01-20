@@ -21,7 +21,7 @@ const loginUserFromDB = async (payload: TLoginUser) => {
   const isMatch = await user.comparePassword(password);
 
   if (!isMatch) {
-    throw new AppError(StatusCodes.BAD_REQUEST, "Password is incorrect!");
+    throw new AppError(StatusCodes.BAD_REQUEST, "লগইন ব্যর্থ হয়েছে! মোবাইল নম্বর বা পাসওয়ার্ড চেক করুন!");
   }
 
   const jwtPayload = {
