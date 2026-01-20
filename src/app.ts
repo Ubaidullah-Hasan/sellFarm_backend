@@ -5,14 +5,17 @@ import router from "./app/routes";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 import path from "path";
 
-
 const app: Application = express();
 
 // parsers
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
-// routes 
+// routes
 app.use("/api/v1", router);
 
 // ===============================
@@ -25,7 +28,6 @@ const frontendPath = path.join(process.cwd(), "frontend");
 // static files
 app.use(express.static(frontendPath));
 
-
 // test route
 app.get("/", (req, res) => {
   res.send("Welcome to our server!");
@@ -35,7 +37,6 @@ app.get("/", (req, res) => {
 app.get(/.*/, (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
-
 
 app.use(globalErrorHandler);
 

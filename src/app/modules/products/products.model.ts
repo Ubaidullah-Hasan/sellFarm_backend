@@ -49,8 +49,6 @@ const productSchema = new Schema<IProduct>(
   },
 );
 
-// Indexes for better query performance
-productSchema.index({ title: 1 });
 
 // Virtual for ROI (Return on Investment) percentage
 productSchema.virtual("roiPercentage").get(function (this: IProduct) {
