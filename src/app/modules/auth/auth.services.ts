@@ -5,6 +5,7 @@ import { TLoginUser } from "./auth.interface";
 import { userStatus } from "../users/user.constants";
 import { createToken, verifyToken } from "./auth.utils";
 import config from "../../../config";
+import { Response } from "express";
 
 const loginUserFromDB = async (payload: TLoginUser) => {
   const { mobile, password } = payload;
@@ -41,18 +42,18 @@ const loginUserFromDB = async (payload: TLoginUser) => {
     config.jwt_refresh_secret as string,
     config.jwt_refresh_expires_in as string
   );
-  
+
   const userResponse = {
-  _id: user._id,
-  role: user.role,
-  mobile: user.mobile,
-  referedCode: user.referedCode,
-  selfCode: user.selfCode,
-  otpVerified: user.otpVarification?.verified || false,
-  balance: user.balance,
-  status: user.status,
-  createdAt: user.createdAt,
-};
+    _id: user._id,
+    role: user.role,
+    mobile: user.mobile,
+    referedCode: user.referedCode,
+    selfCode: user.selfCode,
+    otpVerified: user.otpVarification?.verified || false,
+    balance: user.balance,
+    status: user.status,
+    createdAt: user.createdAt,
+  };
 
   return {
     accessToken,
@@ -65,7 +66,7 @@ const refreshToken = async (token: string) => {
 
   const decoded = verifyToken(token, config.jwt_refresh_secret as string);
 
-  const { userId, iat } = decoded;
+  const { userId } = decoded;
 
   // checking if the user is exist
   const user = await UserModel.findById(userId);
@@ -99,7 +100,19 @@ const refreshToken = async (token: string) => {
 }
 
 
+const logOutUser = async (res: Response) => {
+  // ✅ refreshToken cookie clear
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+  });
+
+  return;
+}
+
+
 export const authServices = {
   loginUserFromDB,
-  refreshToken
+  refreshToken,
+  logOutUser
 };

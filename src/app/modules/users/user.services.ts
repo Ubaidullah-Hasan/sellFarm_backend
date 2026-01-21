@@ -3,7 +3,6 @@ import AppError from "../../utils/AppError";
 import { TUser } from "./user.interface";
 import { UserModel } from "./user.model";
 import { JwtPayload } from "jsonwebtoken";
-import { BADFLAGS } from "dns";
 
 const createUserIntoDB = async (payload: TUser) => {
   const { referedCode } = payload;
