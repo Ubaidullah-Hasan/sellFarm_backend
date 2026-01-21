@@ -41,10 +41,23 @@ const loginUserFromDB = async (payload: TLoginUser) => {
     config.jwt_refresh_secret as string,
     config.jwt_refresh_expires_in as string
   );
+  
+  const userResponse = {
+  _id: user._id,
+  role: user.role,
+  mobile: user.mobile,
+  referedCode: user.referedCode,
+  selfCode: user.selfCode,
+  otpVerified: user.otpVarification?.verified || false,
+  balance: user.balance,
+  status: user.status,
+  createdAt: user.createdAt,
+};
 
   return {
     accessToken,
     refreshToken,
+    user: userResponse
   };
 };
 

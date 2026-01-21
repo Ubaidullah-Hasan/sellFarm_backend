@@ -46,10 +46,16 @@ const getUserProfileFromDB = async (
   }
 
   const userProfile = {
-    mobile: isExistUser.mobile,
-    balance: isExistUser.balance,
-    id: isExistUser._id,
-  }
+  _id: isExistUser._id,
+  role: isExistUser.role,
+  mobile: isExistUser.mobile,
+  referedCode: isExistUser.referedCode,
+  selfCode: isExistUser.selfCode,
+  otpVerified: isExistUser.otpVarification?.verified || false,
+  balance: isExistUser.balance,
+  status: isExistUser.status,
+  createdAt: isExistUser.createdAt,
+};
   
   return userProfile;
 }
