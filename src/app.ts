@@ -9,18 +9,11 @@ import cookieParser from 'cookie-parser';
 
 const app: Application = express();
 
-// parsers
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // 👈 frontend origin
-//     credentials: true,
-//   })
-// );
-
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
-  "http://localhost:4000"
+  "http://localhost:4000",
+  "https://farmsellr.com"
 ];
 
 app.use(
