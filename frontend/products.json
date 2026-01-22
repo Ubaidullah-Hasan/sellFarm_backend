@@ -2,11 +2,9 @@
   {
     "name": "জৈব - পালং শাক <বিনামূল্যে ভর্তুকি>",
     "image": "https://i.ibb.co.com/rRQxpkyT/download.jpg",
-    "years": "রাজস্ব চক্র : 365 দিন",
+    "years":"365",
     "price": 9,
-    "Day": "দৈনিক আয়",
     "income": "3,285",
-    "total": "মোট আয়",
     "target": 0,
     "count": "1/1"
   },

@@ -9,26 +9,30 @@ import cookieParser from 'cookie-parser';
 
 const app: Application = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "http://localhost:4000",
-  "https://farmsellr.com"
-];
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true);
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // postman / server-to-server
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+    const allowedOrigins = [
+      "http://localhost:5173",
+      "http://localhost:4000",
+      "https://farmsellr.com"
+    ];
+
+    if (allowedOrigins.includes(origin)) return cb(null, origin);
+    return cb(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+}));
+app.options(/.*/, cors());
+
+// if (config.NODE_ENV !== "production") {
+//   app.use(cors({
+//     origin: ["http://localhost:5173", "http://localhost:4000"],
+//     credentials: true,
+//   }));
+//   app.options(/.*/, cors());
+// }
 
 
 app.use(express.json());
@@ -54,10 +58,10 @@ app.get("/welcome", (req, res) => {
   res.send("Welcome to our server!");
 });
 
-// IMPORTANT: frontend fallback
-app.get(/.*/, (req, res) => {
+// IMPORTANT: frontend serve
+app.get(/^\/(?!api\/v1).*/, (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
-});
+}); 
 
 app.use(globalErrorHandler);
 

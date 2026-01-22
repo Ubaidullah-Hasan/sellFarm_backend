@@ -14,7 +14,10 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   res.cookie('refreshToken', refreshToken, {
     secure: config.NODE_ENV === 'production',
     httpOnly: true,
+    sameSite: "none",     // ✅ cross-site cookie জন্য must // todo
+    path: "/",            // ✅ clearCookie করার সাথে match // todo
   });
+
 
   sendResponse(res, {
     success: true,

@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { Secret } from 'jsonwebtoken';
 import config from '../../config';
 import AppError from '../utils/AppError';
 import { userRole } from '../modules/users/user.constants';

@@ -105,6 +105,8 @@ const logOutUser = async (res: Response) => {
   res.clearCookie('refreshToken', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
+    sameSite: "none", // todo
+    path: "/", // todo
   });
 
   return;
