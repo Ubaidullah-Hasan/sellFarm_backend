@@ -15,9 +15,7 @@ export const investmentStatusSchema = z.enum([
 // ✅ Create Investment
 const createInvestmentZodSchema = z.object({
     body: z.object({
-        userId: objectIdSchema,
         productId: objectIdSchema,
-        payInfo: objectIdSchema,
         amount: z.number().positive("amount must be positive"),
         status: investmentStatusSchema.optional(), // default pending
     }),
@@ -26,12 +24,19 @@ const createInvestmentZodSchema = z.object({
 // ✅ Update Investment (partial)
 const updateInvestmentZodSchema = z.object({
     body: z.object({
-        userId: objectIdSchema.optional(),
         productId: objectIdSchema.optional(),
-        payInfo: objectIdSchema.optional(),
         amount: z.number().positive().optional(),
         status: investmentStatusSchema.optional(),
     }),
+});
+
+/**
+ * ✅ Admin status update
+ */
+export const updateInvestmentStatusZodSchema = z.object({
+  body: z.object({
+    status: investmentStatusSchema,
+  }),
 });
 
 export const investmentZodValidation = {

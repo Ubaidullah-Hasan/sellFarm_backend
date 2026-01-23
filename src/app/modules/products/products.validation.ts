@@ -16,15 +16,13 @@ const createProductZodSchema = z.object({
       }),
     dailyProfit: z.number().min(0, "Daily profit cannot be negative"),
     maxInvestCountPerPerson: z
-      .number()
+      .number({ message: "Max invest count per person must be a number" })
       .int()
-      .min(0, "Max invest count cannot be negative")
-      .default(0),
+      .min(0, "Max invest count cannot be negative"),
     investmentDayCycle: z
       .number()
       .int()
-      .min(1, "Investment cycle must be at least 1 day")
-      .default(30),
+      .min(1, "Investment cycle must be at least 1 day"),
     price: z.number().min(0, "Price cannot be negative")
   }),
 });

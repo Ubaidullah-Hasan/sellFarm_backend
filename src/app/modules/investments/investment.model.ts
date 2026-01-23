@@ -18,11 +18,9 @@ const investmentSchema = new Schema<IInvestment>(
             required: true,
             index: true,
         },
-        payInfo: {
-            type: Schema.Types.ObjectId,
-            ref: "Payment", // todo
-            required: true,
-            index: true,
+        investedQuantatity: {
+            type: Number,
+            default: 0
         },
         amount: {
             type: Number,
@@ -43,4 +41,4 @@ const investmentSchema = new Schema<IInvestment>(
 );
 
 
-export const Investment = model<IInvestment>("Investment", investmentSchema);
+export const InvestmentModel = model<IInvestment>("Investment", investmentSchema);

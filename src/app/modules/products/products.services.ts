@@ -2,7 +2,14 @@ import { IProduct } from "./products.interface";
 import { Product } from "./products.model";
 
 const createProduct = async (payload: IProduct) => {
-  const result = await Product.create({ ...payload, price: Number(parseInt(payload.price.toString())) });
+
+  const result = await Product.create({ 
+    ...payload, 
+    price: Number(parseInt(payload.price.toString())),
+    maxInvestCountPerPerson: Number(parseInt(payload.maxInvestCountPerPerson.toString())),
+    dailyProfit: Number(parseFloat(payload.dailyProfit.toString())),
+    investmentDayCycle: Number(parseInt(payload.investmentDayCycle.toString())),
+  });
   return result;
 };
 

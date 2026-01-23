@@ -24,13 +24,11 @@ const productSchema = new Schema<IProduct>(
       type: Number,
       required: [true, "Max invest count is required"],
       min: [0, "Max invest count cannot be negative"],
-      default: 0,
     },
     investmentDayCycle: {
       type: Number,
       required: [true, "Investment cycle is required"],
-      min: [1, "Investment cycle must be at least 1 day"],
-      default: 30,
+      min: [1, "Investment cycle must be at least 1 day"]
     },
     price: {
       type: Number,
