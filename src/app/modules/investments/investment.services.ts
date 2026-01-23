@@ -3,7 +3,6 @@ import AppError from "../../utils/AppError";
 import { InvestmentModel } from "./investment.model";
 import { UserModel } from "../users/user.model";
 import { Product } from "../products/products.model";
-import e from "cors";
 import { investmentStatus } from "./investment.constants";
 
 type CreateInvestmentPayload = {
@@ -64,44 +63,43 @@ const createInvestmentIntoDB = async (payload: CreateInvestmentPayload) => {
   return investment;
 };
 
-// const getInvestmentsByUserFromDB = async (userId: string) => {
-//   const data = await Investment.find({ userId: new Types.ObjectId(userId) })
-//     .populate("productId") // product details দেখাবে
-//     .sort({ createdAt: -1 });
+const getInvestmentsByUserFromDB = async (userId: string) => {
+  const data = await InvestmentModel.find({ userId })
+    .populate("productId") 
+    .populate("userId")
+    .sort({ createdAt: -1 });
 
-//   return data;
-// };
+  return data;
+};
 
-// const getPendingInvestmentsFromDB = async () => {
-//   const data = await Investment.find({ status: "pending" })
-//     .populate("userId", "mobile role") // user info limited fields
-//     .populate("productId")
-//     .populate("payInfo") // optional
-//     .sort({ createdAt: -1 });
+const getPendingInvestmentsFromDB = async () => {
+  const data = await InvestmentModel.find({ status: investmentStatus.PENDING })
+    .populate("userId", "mobile role") 
+    .populate("productId")
+    .sort({ createdAt: -1 });
 
-//   return data;
-// };
+  return data;
+};
 
-// const updateInvestmentStatusInDB = async (id: string, status: string) => {
-//   const updated = await Investment.findByIdAndUpdate(
-//     id,
-//     { status },
-//     { new: true, runValidators: true }
-//   )
-//     .populate("userId", "mobile role")
-//     .populate("productId")
-//     .populate("payInfo");
+const updateInvestmentStatusInDB = async (id: string, status: string) => {
+  const updated = await InvestmentModel.findByIdAndUpdate(
+    id,
+    { status },
+    { new: true, runValidators: true }
+  )
+    .populate("userId", "mobile role")
+    .populate("productId");
 
-//   if (!updated) {
-//     throw new AppError(StatusCodes.NOT_FOUND, "Investment not found");
-//   }
+  if (!updated) {
+    throw new AppError(StatusCodes.NOT_FOUND, "Investment not found");
+  }
 
-//   return updated;
-// };
+  return updated;
+};
 
 export const InvestmentServices = {
   createInvestmentIntoDB,
-  // getInvestmentsByUserFromDB,
-  // getPendingInvestmentsFromDB,
-  // updateInvestmentStatusInDB,
+  getInvestmentsByUserFromDB,
+  getPendingInvestmentsFromDB,
+  updateInvestmentStatusInDB,
 };

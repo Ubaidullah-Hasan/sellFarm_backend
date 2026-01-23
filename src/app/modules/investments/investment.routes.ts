@@ -18,27 +18,27 @@ router.post(
   InvestmentControllers.createInvestment
 );
 
-// router.get(
-//   "/my",
-//   auth(userRole.USER, userRole.ADMIN),
-//   investmentControllers.getMyInvestments
-// );
+router.get(
+  "/my",
+  auth(userRole.INVESTOR, userRole.ADMIN),
+  InvestmentControllers.getMyInvestments
+);
 
 /**
  * ADMIN
  */
-// router.get(
-//   "/pending",
-//   auth(userRole.ADMIN),
-//   investmentControllers.getPendingInvestments
-// );
+router.get(
+  "/pending",
+  auth(userRole.ADMIN),
+  InvestmentControllers.getPendingInvestments
+);
 
-// router.patch(
-//   "/:id/status",
-//   auth(userRole.ADMIN),
-//   validateRequest(updateInvestmentStatusZodSchema),
-//   investmentControllers.updateInvestmentStatus
-// );
+router.patch(
+  "/:id/status",
+  auth(userRole.ADMIN),
+  validateRequest(investmentZodValidation.updateInvestmentStatusZodSchema),
+  InvestmentControllers.updateInvestmentStatus
+);
 
 
 

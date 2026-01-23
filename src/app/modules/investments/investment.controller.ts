@@ -23,47 +23,47 @@ const createInvestment = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-// const getMyInvestments = catchAsync(async (req: Request, res: Response) => {
-//   const userId = (req.user as any)?.userId;
+const getMyInvestments = catchAsync(async (req: Request, res: Response) => {
+    const { userId } = req.user;
 
-//   const result = await investmentServices.getInvestmentsByUserFromDB(userId);
+    const result = await InvestmentServices.getInvestmentsByUserFromDB(userId);
 
-//   sendResponse(res, {
-//     success: true,
-//     statusCode: StatusCodes.OK,
-//     message: "My investments fetched successfully",
-//     data: result,
-//   });
-// });
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: "My investments fetched successfully",
+        data: result,
+    });
+});
 
-// const getPendingInvestments = catchAsync(async (req: Request, res: Response) => {
-//   const result = await investmentServices.getPendingInvestmentsFromDB();
+const getPendingInvestments = catchAsync(async (req: Request, res: Response) => {
+    const result = await InvestmentServices.getPendingInvestmentsFromDB();
 
-//   sendResponse(res, {
-//     success: true,
-//     statusCode: StatusCodes.OK,
-//     message: "Pending investments fetched successfully",
-//     data: result,
-//   });
-// });
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: "Pending investments fetched successfully",
+        data: result,
+    });
+});
 
-// const updateInvestmentStatus = catchAsync(async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const { status } = req.body;
+const updateInvestmentStatus = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { status } = req.body;
 
-//   const result = await investmentServices.updateInvestmentStatusInDB(id, status);
+  const result = await InvestmentServices.updateInvestmentStatusInDB(id, status);
 
-//   sendResponse(res, {
-//     success: true,
-//     statusCode: StatusCodes.OK,
-//     message: "Investment status updated successfully",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: "Investment status updated successfully",
+    data: result,
+  });
+});
 
 export const InvestmentControllers = {
     createInvestment,
-    //   getMyInvestments,
-    //   getPendingInvestments,
-    //   updateInvestmentStatus,
+    getMyInvestments,
+    getPendingInvestments,
+      updateInvestmentStatus,
 };

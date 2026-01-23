@@ -42,5 +42,6 @@ export const updateInvestmentStatusZodSchema = z.object({
 export const investmentZodValidation = {
     createInvestmentZodSchema,
     updateInvestmentZodSchema,
+    updateInvestmentStatusZodSchema
 };
 
