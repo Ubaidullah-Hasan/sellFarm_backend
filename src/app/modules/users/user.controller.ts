@@ -6,12 +6,12 @@ import sendResponse from "../../utils/sendResponse";
 import { StatusCodes } from "http-status-codes";
 
 const registerUser = catchAsync(
-    async(req: Request, res: Response, next:NextFunction) => {
-        const {...userData} = req.body;
+    async (req: Request, res: Response, next: NextFunction) => {
+        const { ...userData } = req.body;
         const result = await userServices.createUserIntoDB(userData);
 
         sendResponse(res, {
-            success: true, 
+            success: true,
             statusCode: StatusCodes.OK,
             message: "User created successfully!",
             data: result
@@ -20,19 +20,32 @@ const registerUser = catchAsync(
 );
 
 const getUserProfile = catchAsync(async (req: Request, res: Response) => {
-  const user = req.user;
-  const result = await userServices.getUserProfileFromDB(user);
+    const user = req.user;
+    const result = await userServices.getUserProfileFromDB(user);
 
-  sendResponse(res, {
-    success: true,
-    statusCode: StatusCodes.OK,
-    message: 'Profile data retrieved successfully',
-    data: result,
-  });
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: 'Profile data retrieved successfully',
+        data: result,
+    });
 });
+
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
+    const result = await userServices.getAllUsersFromDb();
+
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: 'Users data retrieved successfully',
+        data: result,
+    });
+});
+
 
 
 export const userController = {
     registerUser,
-    getUserProfile
+    getUserProfile,
+    getAllUsers
 }

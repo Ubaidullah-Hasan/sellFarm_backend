@@ -44,7 +44,7 @@ const userSchema = new Schema<IUserDocument>(
     },
     referedCode: {
       type: String,
-      required: true
+      default: ""
     },
     selfCode: {
       type: String,

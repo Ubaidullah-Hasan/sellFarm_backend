@@ -8,4 +8,6 @@ export interface IInvestment extends Document {
   amount: number;
   status?: TInvestmentStatus;
   investedQuantatity?: number;
+  profitDaysPaid?: number;   // কতদিন profit already paid
+  lastProfitAt?: Date;
 }

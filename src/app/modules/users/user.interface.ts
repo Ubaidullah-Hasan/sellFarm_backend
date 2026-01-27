@@ -12,7 +12,7 @@ export type TUser = {
   mobile: string;
   password: string;
   invitedBy?: Types.ObjectId | null;
-  referedCode: string;
+  referedCode?: string;
   selfCode: string;
   otpVarification?: TOtpVarification;
   balance?: number;

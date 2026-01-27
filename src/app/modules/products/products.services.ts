@@ -24,6 +24,8 @@ const getProductById = async (id: string) => {
   return products;
 }
 
+
+
 export const ProductService = {
   createProduct,
   getAllProducts,

@@ -26,14 +26,6 @@ app.use(cors({
 }));
 app.options(/.*/, cors());
 
-// if (config.NODE_ENV !== "production") {
-//   app.use(cors({
-//     origin: ["http://localhost:5173", "http://localhost:4000"],
-//     credentials: true,
-//   }));
-//   app.options(/.*/, cors());
-// }
-
 
 app.use(express.json());
 // Cookie parser middleware
@@ -62,6 +54,10 @@ app.get("/welcome", (req, res) => {
 app.get(/^\/(?!api\/v1).*/, (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 }); 
+
+// run node cron jobs (dorkar nai shared hosting e kaj korbe na)
+// startProfitCron(); 
+
 
 app.use(globalErrorHandler);
 

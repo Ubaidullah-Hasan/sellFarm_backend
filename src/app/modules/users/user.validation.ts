@@ -19,8 +19,8 @@ const registerUserZodSchema = z.object({
       .min(8, "Password must be at least 8 characters")
       .max(128, "Password too long"),
     referedCode: z
-      .string({message: "Refered code is required!"})
-      .min(4, "Need referedCode to register"),
+      .string({ message: "Refered code is required!" })
+      .optional(),
     selfCode: z
       .string()
       .min(4, "selfCode too short")

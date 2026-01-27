@@ -34,6 +34,14 @@ const investmentSchema = new Schema<IInvestment>(
             default: investmentStatus.PENDING,
             index: true,
         },
+        profitDaysPaid: {
+            type: Number,
+            default: 0
+        },
+        lastProfitAt: {
+            type: Date,
+            default: null
+        },
     },
     {
         timestamps: true
