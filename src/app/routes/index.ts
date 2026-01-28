@@ -4,6 +4,7 @@ import { authRoutes } from "../modules/auth/auth.routes";
 import { ProductRoutes } from "../modules/products/products.routes";
 import { InvestmentRoutes } from "../modules/investments/investment.routes";
 import { DepositRoutes } from "../modules/deposit/deposit.route";
+import { WithdrawRoutes } from "../modules/withdraw/withdraw.routes";
 
 const router = Router();
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: "/deposits",
     route: DepositRoutes,
+  },
+  {
+    path: "/withdraws",
+    route: WithdrawRoutes,
   }
 ];
 

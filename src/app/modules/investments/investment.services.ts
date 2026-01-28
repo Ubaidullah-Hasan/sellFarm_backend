@@ -32,28 +32,41 @@ const createInvestmentIntoDB = async (payload: CreateInvestmentPayload) => {
     throw new AppError(StatusCodes.NOT_FOUND, "Product not found");
   }
 
+  // => previous logic with maxInvestCountPerPerson
+  // const existInvestment = await InvestmentModel.findOne({ productId, userId, status: investmentStatus.ACCEPTED });
 
+  // let investment;
 
-  const existInvestment = await InvestmentModel.findOne({ productId, userId, status: investmentStatus.ACCEPTED });
+  // if (existInvestment) {
+  //   if (existInvestment.investedQuantatity! >= product.maxInvestCountPerPerson) {
+  //     throw new AppError(StatusCodes.CONFLICT, "You have already invested in this product not more allow.");
+  //   }
+  //   existInvestment.investedQuantatity! += 1;
+  //   existInvestment.status = investmentStatus.PENDING;
+  //   investment = await existInvestment.save();
+  // } else {
+  //   investment = await InvestmentModel.create({
+  //     userId,
+  //     productId,
+  //     amount,
+  //     status: investmentStatus.PENDING,
+  //     investedQuantatity: 1
+  //   });
+  // }
 
-  let investment;
-
+  // new logic: only one investment per user per product
+  const existInvestment = await InvestmentModel.findOne({ productId, userId });
   if (existInvestment) {
-    if (existInvestment.investedQuantatity! >= product.maxInvestCountPerPerson) {
-      throw new AppError(StatusCodes.CONFLICT, "You have already invested in this product not more allow.");
-    }
-    existInvestment.investedQuantatity! += 1;
-    existInvestment.status = investmentStatus.PENDING;
-    investment = await existInvestment.save();
-  } else {
-    investment = await InvestmentModel.create({
-      userId,
-      productId,
-      amount,
-      status: investmentStatus.PENDING,
-      investedQuantatity: 1
-    });
+    throw new AppError(StatusCodes.CONFLICT, "You have already invested in this product or already requested!");
   }
+
+  const investment = await InvestmentModel.create({
+    userId,
+    productId,
+    amount,
+    status: investmentStatus.PENDING,
+    investedQuantatity: 1
+  });
 
   return investment;
 };

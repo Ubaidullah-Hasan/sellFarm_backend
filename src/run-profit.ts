@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 import config from "./config";
 import { userServices } from "./app/modules/users/user.services";
-import dotenv from "dotenv";
-import path from "path";
 
 
-dotenv.config({
-  path: path.join(__dirname, "../.env"),
-});
 
-// for js
+// for js (.env file path in cpanel for cron jobs)
 // const path = require("path");
 // require("dotenv").config({
+//   path: path.join(__dirname, "../.env"),
+// });
+
+// for ts => but does not work
+// configDotenv({
 //   path: path.join(__dirname, "../.env"),
 // });
 

@@ -8,9 +8,9 @@ let server: Server;
 
 async function main() {
   try {
-    await mongoose.connect(config.database_url as string);
+    // await mongoose.connect(config.database_url as string);
    
-    // await mongoose.connect("mongodb://localhost:27017/sell_farm");
+    await mongoose.connect("mongodb://localhost:27017/sell_farm");
     logger.info("🛢️🛢️ Database connected successfully."); 
 
     server = app.listen(config.port, () => {
