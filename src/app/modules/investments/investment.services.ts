@@ -252,7 +252,7 @@ const updateInvestmentStatusInDB = async (id: string, status: string) => {
   await investment.save();
 
   const populatedInvestment = await investment.populate([
-    { path: "userId", select: "mobile role balance" },
+    { path: "userId", select: "mobile role balance selfCode status _id" },
     { path: "productId", select: "title amount" },
   ]);
 

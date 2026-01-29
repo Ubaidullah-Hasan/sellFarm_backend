@@ -35,7 +35,10 @@ const getMyDepositsFromDB = async (userId: string) => {
 };
 
 const updateDepositStatusInDB = async (id: string, status: string) => {
-  const deposit = await DepositModel.findById(id);
+  const deposit = await DepositModel
+    .findById(id)
+    .populate("userId", "mobile role balance selfCode status _id");
+
   if (!deposit) {
     throw new AppError(StatusCodes.NOT_FOUND, "Deposit not found");
   }
@@ -61,7 +64,9 @@ const updateDepositStatusInDB = async (id: string, status: string) => {
   deposit.status = status as typeof depositStatus[keyof typeof depositStatus];
   await deposit.save();
 
-  return deposit;
+  const populatedDeposit = await deposit.populate("userId", "mobile role balance selfCode status _id");
+
+  return populatedDeposit;
 };
 
 const getDepositsByStatusFromDB = async (status: string) => {
