@@ -7,36 +7,20 @@ import { WithdrawService } from "./withdraw.service";
 import { TWithdrawStatus } from "./withdraw.constants";
 
 const createWithdraw = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {
-        const {userId} = req.user;
-        req.body.userId = userId;
-        const { ...userData } = req.body;
-        const result = await WithdrawService.createWithdraw(userData);
-
-        sendResponse(res, {
-            success: true,
-            statusCode: StatusCodes.OK,
-            message: "Withdraw request created successfully!",
-            data: result
-        })
-    }
-);
-
-
-const approveWithdraw = catchAsync(
-  async (req: Request, res: Response) => {
-    const { withdrawId } = req.params;          
-
-    const result = await WithdrawService.approveWithdraw(withdrawId);
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.user;
+    req.body.userId = userId;
+    const { ...userData } = req.body;
+    const result = await WithdrawService.createWithdraw(userData);
 
     sendResponse(res, {
-      statusCode: StatusCodes.OK,
       success: true,
-      message: "Withdraw approved successfully",
-      data: result,
-    });
+      statusCode: StatusCodes.OK,
+      message: "Withdraw request created successfully!",
+      data: result
+    })
   }
-)
+);
 
 
 
@@ -60,9 +44,25 @@ const getWithdrawList = catchAsync(
 )
 
 
+const approveWithdraw = catchAsync(
+  async (req: Request, res: Response) => {
+    const { withdrawId } = req.params;
+
+    const result = await WithdrawService.approveWithdraw(withdrawId);
+
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: "Withdraw approved successfully",
+      data: result,
+    });
+  }
+)
+
+
 const rejectedWithdraw = catchAsync(
   async (req: Request, res: Response) => {
-    const { withdrawId } = req.params;          
+    const { withdrawId } = req.params;
 
     const result = await WithdrawService.rejectWithdraw(withdrawId);
     sendResponse(res, {
@@ -76,8 +76,8 @@ const rejectedWithdraw = catchAsync(
 
 
 export const withdrawController = {
-    createWithdraw,
-    getWithdrawList,
-    approveWithdraw,
-    rejectedWithdraw,
+  createWithdraw,
+  getWithdrawList,
+  approveWithdraw,
+  rejectedWithdraw,
 }

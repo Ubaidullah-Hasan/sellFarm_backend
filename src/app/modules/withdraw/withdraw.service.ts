@@ -46,6 +46,55 @@ const createWithdraw = async (payload: {
 };
 
 
+type TGetWithdrawListParams = {
+    status?: TWithdrawStatus;
+    page?: number;
+    limit?: number;
+};
+
+
+
+// GET /api/v1/withdraws?status=PENDING
+// GET /api/v1/withdraws?status=PENDING&page=2&limit=20
+const getWithdrawListForAdmin = async (
+    params: TGetWithdrawListParams
+) => {
+    const {
+        status,
+        page = 1,
+        limit = 10,
+    } = params;
+
+    const filter: Record<string, unknown> = {};
+
+    // ✅ status wise filter
+    if (status) {
+        if (!Object.values(withdrawStatus).includes(status)) {
+            throw new AppError(StatusCodes.BAD_REQUEST, "Invalid withdraw status");
+        }
+        filter.status = status;
+    }
+
+    const skip = (page - 1) * limit;
+
+    const data = await WithdrawModel.find(filter)
+        .populate("userId", "mobile balance")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
+    const total = await WithdrawModel.countDocuments(filter);
+
+    return {
+        meta: {
+            page,
+            limit,
+            total,
+        },
+        data,
+    };
+};
+
 
 const approveWithdraw = async (withdrawId: string) => {
     const withdraw = await WithdrawModel.findById(withdrawId);
@@ -91,106 +140,54 @@ const approveWithdraw = async (withdrawId: string) => {
     withdraw.status = withdrawStatus.APPROVED;
     await withdraw.save();
 
-    return {
-        success: true,
-        message: "Withdraw approved successfully",
-        withdraw,
-    };
-};
+    const withdrawPopulate = await withdraw.populate("userId", "mobile role balance selfCode status _id");
 
-
-type TGetWithdrawListParams = {
-    status?: TWithdrawStatus;
-    page?: number;
-    limit?: number;
-};
-
-
-
-// GET /api/v1/withdraws?status=PENDING
-// GET /api/v1/withdraws?status=PENDING&page=2&limit=20
-const getWithdrawListForAdmin = async (
-    params: TGetWithdrawListParams
-) => {
-    const {
-        status,
-        page = 1,
-        limit = 10,
-    } = params;
-
-    const filter: Record<string, unknown> = {};
-
-    // ✅ status wise filter
-    if (status) {
-        if (!Object.values(withdrawStatus).includes(status)) {
-            throw new AppError(StatusCodes.BAD_REQUEST, "Invalid withdraw status");
-        }
-        filter.status = status;
-    }
-
-    const skip = (page - 1) * limit;
-
-    const data = await WithdrawModel.find(filter)
-        .populate("userId ", "mobile balance") 
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit);
-
-    const total = await WithdrawModel.countDocuments(filter);
-
-    return {
-        meta: {
-            page,
-            limit,
-            total,
-        },
-        data,
-    };
+    return withdrawPopulate;
 };
 
 
 const rejectWithdraw = async (
-  withdrawId: string
+    withdrawId: string
 ) => {
-  const withdraw = await WithdrawModel.findById(withdrawId);
+    const withdraw = await WithdrawModel.findById(withdrawId);
 
-  if (!withdraw) {
-    throw new AppError(
-      StatusCodes.NOT_FOUND,
-      "Withdraw request not found"
-    );
-  }
+    if (!withdraw) {
+        throw new AppError(
+            StatusCodes.NOT_FOUND,
+            "Withdraw request not found"
+        );
+    }
 
-  // ❗ already approved guard
-  if (withdraw.status === withdrawStatus.APPROVED) {
-    throw new AppError(
-      StatusCodes.BAD_REQUEST,
-      "Approved withdraw cannot be rejected"
-    );
-  }
+    // ❗ already approved guard
+    if (withdraw.status === withdrawStatus.APPROVED) {
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            "Approved withdraw cannot be rejected"
+        );
+    }
 
-  // ❗ already rejected guard
-  if (withdraw.status === withdrawStatus.REJECTED) {
-    throw new AppError(
-      StatusCodes.BAD_REQUEST,
-      "Withdraw already rejected"
-    );
-  }
+    // ❗ already rejected guard
+    if (withdraw.status === withdrawStatus.REJECTED) {
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            "Withdraw already rejected"
+        );
+    }
 
-  // ✅ reject withdraw
-  withdraw.status = withdrawStatus.REJECTED;
-  await withdraw.save();
+    // ✅ reject withdraw
+    withdraw.status = withdrawStatus.REJECTED;
+    await withdraw.save();
 
-  return {
-    success: true,
-    message: "Withdraw rejected successfully",
-    withdraw,
-  };
+    return {
+        success: true,
+        message: "Withdraw rejected successfully",
+        withdraw,
+    };
 };
 
 export const WithdrawService = {
     createWithdraw,
-    approveWithdraw,
     getWithdrawListForAdmin,
+    approveWithdraw,
     rejectWithdraw
 };

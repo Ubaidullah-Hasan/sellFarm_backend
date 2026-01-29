@@ -7,10 +7,25 @@ import { withdrawController } from "./withdraw.controller";
 
 const router = Router();
 
-router.post("/", 
+router.post("/",
     auth(userRole.ADMIN, userRole.INVESTOR),
     validateRequest(createWithdrawZodSchema),
     withdrawController.createWithdraw
+)
+
+router.get("/",
+    auth(userRole.ADMIN),
+    withdrawController.getWithdrawList
+)
+
+router.patch("/approve/:withdrawId",
+    auth(userRole.ADMIN),
+    withdrawController.approveWithdraw
+)
+
+router.patch("/reject/:withdrawId",
+    auth(userRole.ADMIN),
+    withdrawController.rejectedWithdraw
 )
 
 
